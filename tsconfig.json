@@ -7,6 +7,11 @@
     "allowJs": true,
     "resolveJsonModule": true,
 
+    /* Path mapping */
+    "paths": {
+      "src/*": ["./src/*"]
+    },
+
     /* Build */
     "target": "ES2020",
     "lib": ["ES2020", "DOM", "DOM.Iterable"],

@@ -26,6 +26,7 @@ const commonRules = () => ({
   'default-case': [2, { commentPattern: '^no default$' }],
   'lines-around-directive': [2, { before: 'always', after: 'always' }],
   'arrow-body-style': [2, 'as-needed', { requireReturnForObjectLiteral: false }],
+  'no-debugger': 0,
   // react
   'react/jsx-key': 0,
   'react/prop-types': 0,

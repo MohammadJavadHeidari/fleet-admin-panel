@@ -6,6 +6,8 @@ import { usePathname } from 'src/routes/hooks';
 
 import { ThemeProvider } from 'src/theme/theme-provider';
 
+import { AuthProvider } from 'src/auth/context';
+
 // ----------------------------------------------------------------------
 
 type AppProps = {
@@ -16,9 +18,9 @@ export default function App({ children }: AppProps) {
   useScrollToTop();
 
   return (
-    <ThemeProvider>
-      {children}
-    </ThemeProvider>
+    <AuthProvider>
+      <ThemeProvider>{children}</ThemeProvider>
+    </AuthProvider>
   );
 }
 
