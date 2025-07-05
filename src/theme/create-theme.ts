@@ -1,5 +1,6 @@
 import type { Theme } from '@mui/material/styles';
 
+import { faIR } from '@mui/material/locale';
 import { createTheme as createMuiTheme } from '@mui/material/styles';
 
 import { shadows } from './core/shadows';
@@ -35,7 +36,7 @@ type CreateThemeProps = {
 };
 
 export function createTheme({ themeOverrides = {} }: CreateThemeProps = {}): Theme {
-  const theme = createMuiTheme(baseTheme, themeOverrides);
+  const theme = createMuiTheme(baseTheme, themeOverrides, faIR);
 
   return theme;
 }

@@ -1,4 +1,5 @@
-import { Label } from 'src/components/label';
+import { paths } from 'src/routes/paths';
+
 import { SvgColor } from 'src/components/svg-color';
 
 // ----------------------------------------------------------------------
@@ -30,12 +31,12 @@ export const navData = [
   },
   {
     title: 'ایستگاه ها',
-    path: '/station',
+    path: paths.dashboard.station.list,
     icon: icon('ic-station'),
   },
   {
     title: 'مسیر ها',
-    path: '/route',
+    path: '/routes',
     icon: icon('ic-route'),
   },
 ];

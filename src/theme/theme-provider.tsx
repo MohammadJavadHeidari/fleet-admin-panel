@@ -1,5 +1,6 @@
 import type { ThemeProviderProps as MuiThemeProviderProps } from '@mui/material/styles';
 
+import { prefixer } from 'stylis';
 import { useEffect } from 'react';
 import createCache from '@emotion/cache';
 import { CacheProvider } from '@emotion/react';
@@ -22,7 +23,7 @@ export type ThemeProviderProps = Partial<MuiThemeProviderProps> & {
 const cacheRtl = createCache({
   key: 'rtl',
   prepend: true,
-  stylisPlugins: [rtlPlugin],
+  stylisPlugins: [prefixer, rtlPlugin],
 });
 
 export function ThemeProvider({ themeOverrides, children, ...other }: ThemeProviderProps) {

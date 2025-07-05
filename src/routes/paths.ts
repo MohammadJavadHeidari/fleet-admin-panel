@@ -1,8 +1,7 @@
-
 // ----------------------------------------------------------------------
 
 const ROOTS = {
-  DASHBOARD: '/',
+  DASHBOARD: '',
   AUTH: '/auth',
 };
 
@@ -15,7 +14,12 @@ export const paths = {
   },
   // DASHBOARD
   dashboard: {
-    root: ROOTS.DASHBOARD,
+    root: '/',
     employee: `${ROOTS.DASHBOARD}/employee`,
+    station: {
+      root: `${ROOTS.DASHBOARD}/station`,
+      list: `${ROOTS.DASHBOARD}/station/list`,
+      new: `${ROOTS.DASHBOARD}/station/new`,
+    },
   },
 };

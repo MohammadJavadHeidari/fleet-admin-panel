@@ -179,8 +179,6 @@ export function NavContent({ data, slots, workspaces, sx }: NavContentProps) {
                     <Box component="span" sx={{ flexGrow: 1 }}>
                       {item.title}
                     </Box>
-
-                    {item.info && item.info}
                   </ListItemButton>
                 </ListItem>
               );

@@ -19,6 +19,10 @@ export const BlogPage = lazy(() => import('src/pages/blog'));
 export const UserPage = lazy(() => import('src/pages/user'));
 export const SignInPage = lazy(() => import('src/pages/sign-in'));
 export const ProductsPage = lazy(() => import('src/pages/products'));
+// Station
+export const StationListPage = lazy(() => import('src/pages/station/list'));
+export const StationCreatePage = lazy(() => import('src/pages/station/new'));
+// 
 export const Page404 = lazy(() => import('src/pages/page-not-found'));
 
 const renderFallback = () => (
@@ -57,6 +61,14 @@ export const routesSection: RouteObject[] = [
       { path: 'user', element: <UserPage /> },
       { path: 'products', element: <ProductsPage /> },
       { path: 'blog', element: <BlogPage /> },
+      {
+        path: 'station',
+        children: [
+          { element: <StationListPage />, index: true },
+          { path: 'list', element: <StationListPage /> },
+          { path: 'new', element: <StationCreatePage /> },
+        ],
+      },
     ],
   },
   {
@@ -70,9 +82,7 @@ export const routesSection: RouteObject[] = [
         </AuthLayout>
       </GuestGuard>
     ),
-    children: [
-      { path: 'sign-in', element: <SignInPage /> },
-    ],
+    children: [{ path: 'sign-in', element: <SignInPage /> }],
   },
   {
     path: '404',
