@@ -69,7 +69,6 @@ export function AuthProvider({ children }: Props) {
 
   const initialize = useCallback(async () => {
     try {
-      debugger;
       const accessToken = sessionStorage.getItem(STORAGE_KEY);
 
       if (accessToken && isValidToken(accessToken)) {
@@ -77,7 +76,9 @@ export function AuthProvider({ children }: Props) {
 
         const response = await axios.get(API_ENDPOINTS.auth.me);
 
-        const { user } = response.data;
+        const {
+          data: { ...user },
+        } = response.data;
 
         dispatch({
           type: Types.INITIAL,
@@ -115,9 +116,11 @@ export function AuthProvider({ children }: Props) {
       password,
     };
 
-    const response = await axios.post(API_ENDPOINTS.auth.login, data);
+    const response = await axios.post(API_ENDPOINTS.auth.signIn, data);
 
-    const { accessToken, user } = response.data;
+    const {
+      data: { accessToken, ...user },
+    } = response.data;
 
     setSession(accessToken);
 

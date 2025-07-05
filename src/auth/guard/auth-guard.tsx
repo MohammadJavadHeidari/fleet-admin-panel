@@ -13,7 +13,7 @@ type AuthGuardProps = {
   children: React.ReactNode;
 };
 
-export function AuthGuard({ children }: AuthGuardProps) {
+export default function AuthGuard({ children }: AuthGuardProps) {
   const router = useRouter();
 
   const pathname = usePathname();
@@ -40,7 +40,7 @@ export function AuthGuard({ children }: AuthGuardProps) {
     }
 
     if (!authenticated) {
-      const href = `${paths.auth.login}?${createQueryString('returnTo', pathname)}`;
+      const href = `${paths.auth.signIn}?${createQueryString('returnTo', pathname)}`;
 
       router.replace(href);
       return;

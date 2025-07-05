@@ -55,14 +55,7 @@ export function AuthLayout({
           <Logo />
         </>
       ),
-      rightArea: (
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: 1, sm: 1.5 } }}>
-          {/** @slot Help link */}
-          <Link href="#" component={RouterLink} color="inherit" sx={{ typography: 'subtitle2' }}>
-            Need help?
-          </Link>
-        </Box>
-      ),
+      rightArea: null,
     };
 
     return (

@@ -14,7 +14,7 @@ export default axiosInstance;
 export const API_ENDPOINTS = {
   auth: {
     me: '/auth/me',
-    login: '/auth/login',
+    signIn: '/auth/sign-in',
     register: '/auth/register',
   },
   // mail: {

@@ -10,7 +10,7 @@ import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgr
 import { AuthLayout } from 'src/layouts/auth';
 import { DashboardLayout } from 'src/layouts/dashboard';
 
-import { AuthGuard } from 'src/auth/guard';
+import { AuthGuard, GuestGuard } from 'src/auth/guard';
 
 // ----------------------------------------------------------------------
 
@@ -60,12 +60,19 @@ export const routesSection: RouteObject[] = [
     ],
   },
   {
-    path: 'sign-in',
+    path: 'auth',
     element: (
-      <AuthLayout>
-        <SignInPage />
-      </AuthLayout>
+      <GuestGuard>
+        <AuthLayout>
+          <Suspense fallback={renderFallback()}>
+            <Outlet />
+          </Suspense>
+        </AuthLayout>
+      </GuestGuard>
     ),
+    children: [
+      { path: 'sign-in', element: <SignInPage /> },
+    ],
   },
   {
     path: '404',

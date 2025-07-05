@@ -1,28 +1,71 @@
+import { z as zod } from 'zod';
+import { useForm } from 'react-hook-form';
 import { useState, useCallback } from 'react';
+import { useBoolean } from 'minimal-shared/hooks';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 import Box from '@mui/material/Box';
-import Link from '@mui/material/Link';
+import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
-import Divider from '@mui/material/Divider';
-import TextField from '@mui/material/TextField';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import InputAdornment from '@mui/material/InputAdornment';
 
-import { useRouter } from 'src/routes/hooks';
+import { useSearchParams } from 'src/routes/hooks';
+
+import { CONFIG } from 'src/config-global';
 
 import { Iconify } from 'src/components/iconify';
+import FormProvider, { RHFTextField } from 'src/components/hook-form';
+
+import { useAuthContext } from 'src/auth/hooks';
 
 // ----------------------------------------------------------------------
 
+const SignInSchema = zod.object({
+  email: zod.string().email('ایمیل معتبر نیست'),
+  password: zod.string().min(8, 'رمز عبور باید حداقل 8 کاراکتر باشد'),
+});
+
+type SignInFormValues = zod.infer<typeof SignInSchema>;
+
 export function SignInView() {
-  const router = useRouter();
+  const { login } = useAuthContext();
 
-  const [showPassword, setShowPassword] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
 
-  const handleSignIn = useCallback(() => {
-    router.push('/');
-  }, [router]);
+  const searchParams = useSearchParams();
+
+  const returnTo = searchParams.get('returnTo');
+
+  const password = useBoolean();
+
+  const methods = useForm<SignInFormValues>({
+    resolver: zodResolver(SignInSchema),
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+  });
+
+  const {
+    handleSubmit,
+    formState: { isSubmitting },
+  } = methods;
+
+  const onSubmit = useCallback(
+    async (data: SignInFormValues) => {
+      try {
+        await login(data.email, data.password);
+
+        window.location.href = returnTo || CONFIG.auth.pathAfterLogin;
+      } catch (error) {
+        console.error(error);
+        setErrorMsg(error instanceof Error ? error.message : 'خطایی رخ داده است');
+      }
+    },
+    [login, returnTo]
+  );
 
   const renderForm = (
     <Box
@@ -32,34 +75,32 @@ export function SignInView() {
         flexDirection: 'column',
       }}
     >
-      <TextField
-        fullWidth
+      {!!errorMsg && (
+        <Alert sx={{ width: '100%', mb: 3 }} severity="error">
+          {errorMsg}
+        </Alert>
+      )}
+
+      <RHFTextField
         name="email"
-        label="Email address"
-        defaultValue="hello@gmail.com"
+        label="ایمیل"
         sx={{ mb: 3 }}
         slotProps={{
           inputLabel: { shrink: true },
         }}
       />
 
-      <Link variant="body2" color="inherit" sx={{ mb: 1.5 }}>
-        Forgot password?
-      </Link>
-
-      <TextField
-        fullWidth
+      <RHFTextField
         name="password"
-        label="Password"
-        defaultValue="@demo1234"
-        type={showPassword ? 'text' : 'password'}
+        label="رمز عبور"
+        type={password.value ? 'text' : 'password'}
         slotProps={{
           inputLabel: { shrink: true },
           input: {
             endAdornment: (
               <InputAdornment position="end">
-                <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
-                  <Iconify icon={showPassword ? 'solar:eye-bold' : 'solar:eye-closed-bold'} />
+                <IconButton onClick={password.onToggle} edge="end">
+                  <Iconify icon={password.value ? 'solar:eye-bold' : 'solar:eye-closed-bold'} />
                 </IconButton>
               </InputAdornment>
             ),
@@ -70,19 +111,19 @@ export function SignInView() {
 
       <Button
         fullWidth
+        color="inherit"
         size="large"
         type="submit"
-        color="inherit"
         variant="contained"
-        onClick={handleSignIn}
+        loading={isSubmitting}
       >
-        Sign in
+        ورود
       </Button>
     </Box>
   );
 
   return (
-    <>
+    <FormProvider<SignInFormValues> methods={methods} onSubmit={handleSubmit(onSubmit)}>
       <Box
         sx={{
           gap: 1.5,
@@ -92,45 +133,9 @@ export function SignInView() {
           mb: 5,
         }}
       >
-        <Typography variant="h5">Sign in</Typography>
-        <Typography
-          variant="body2"
-          sx={{
-            color: 'text.secondary',
-          }}
-        >
-          Don’t have an account?
-          <Link variant="subtitle2" sx={{ ml: 0.5 }}>
-            Get started
-          </Link>
-        </Typography>
+        <Typography variant="h5">ورود</Typography>
       </Box>
       {renderForm}
-      <Divider sx={{ my: 3, '&::before, &::after': { borderTopStyle: 'dashed' } }}>
-        <Typography
-          variant="overline"
-          sx={{ color: 'text.secondary', fontWeight: 'fontWeightMedium' }}
-        >
-          OR
-        </Typography>
-      </Divider>
-      <Box
-        sx={{
-          gap: 1,
-          display: 'flex',
-          justifyContent: 'center',
-        }}
-      >
-        <IconButton color="inherit">
-          <Iconify width={22} icon="socials:google" />
-        </IconButton>
-        <IconButton color="inherit">
-          <Iconify width={22} icon="socials:github" />
-        </IconButton>
-        <IconButton color="inherit">
-          <Iconify width={22} icon="socials:twitter" />
-        </IconButton>
-      </Box>
-    </>
+    </FormProvider>
   );
 }

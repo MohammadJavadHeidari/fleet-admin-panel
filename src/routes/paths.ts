@@ -11,7 +11,7 @@ const ROOTS = {
 export const paths = {
   // AUTH
   auth: {
-    login: `${ROOTS.AUTH}/login`,
+    signIn: `${ROOTS.AUTH}/sign-in`,
   },
   // DASHBOARD
   dashboard: {
