@@ -130,7 +130,7 @@ export function AccountPopover({ data = [], sx, ...other }: AccountPopoverProps)
 
         <Box sx={{ p: 1 }}>
           <Button fullWidth color="error" size="medium" variant="text">
-            Logout
+            خروج
           </Button>
         </Box>
       </Popover>

@@ -14,6 +14,7 @@ import type { ThemeOptions } from './types';
 // ----------------------------------------------------------------------
 
 export const baseTheme: ThemeOptions = {
+  direction: 'rtl',
   colorSchemes: {
     light: {
       palette: palette.light,
