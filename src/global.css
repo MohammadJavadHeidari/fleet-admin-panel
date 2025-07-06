@@ -15,6 +15,9 @@
 /* scrollbar */
 @import './components/scrollbar/styles.css';
 
+/* map */
+@import './components/map/styles.css';
+
 /* chart */
 @import './components/chart/styles.css';
 

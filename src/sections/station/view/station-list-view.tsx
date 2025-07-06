@@ -1,4 +1,7 @@
+import type { IStation, IStationList } from 'src/types/station';
+
 import { useState, useCallback } from 'react';
+import { useQuery } from '@tanstack/react-query';
 
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -13,31 +16,53 @@ import { paths } from 'src/routes/paths';
 import { useRouter } from 'src/routes/hooks';
 import { RouterLink } from 'src/routes/components';
 
+import { API_ENDPOINTS } from 'src/utils/axios';
+import { apiClient } from 'src/utils/api-client';
+
 import { _users } from 'src/_mock';
 import { DashboardContent } from 'src/layouts/dashboard';
 
 import { Iconify } from 'src/components/iconify';
 import { Scrollbar } from 'src/components/scrollbar';
+import LoadingScreen from 'src/components/loading-screen';
 import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
+import { TableNoData, TableEmptyRows, TableHeadCustom } from 'src/components/table';
 
-import { TableNoData } from '../table-no-data';
-import { UserTableRow } from '../user-table-row';
-import { UserTableHead } from '../user-table-head';
-import { TableEmptyRows } from '../table-empty-rows';
-import { UserTableToolbar } from '../user-table-toolbar';
+import { StationTableRow } from '../station-table-row';
+import { StationTableToolbar } from '../station-table-toolbar';
 import { emptyRows, applyFilter, getComparator } from '../utils';
 
-import type { UserProps } from '../user-table-row';
-
 // ----------------------------------------------------------------------
+
+const useGetStationList = () =>
+  useQuery({
+    queryKey: ['station', 'list'],
+    queryFn: () => apiClient.get<IStationList>(API_ENDPOINTS.station.list),
+  });
+
+const TABLE_HEAD = [
+  { id: 'name', label: 'نام' },
+  { id: 'address', label: 'آدرس' },
+  { id: 'status', label: 'وضعیت' },
+  // { id: '' },
+];
 
 export function StationListView() {
   const table = useTable();
 
+  const { data, isLoading } = useGetStationList();
+
   const [filterName, setFilterName] = useState('');
 
-  const dataFiltered: UserProps[] = applyFilter({
-    inputData: _users,
+  console.log({ data });
+  console.log({ isLoading });
+
+  if (isLoading) return <LoadingScreen />;
+
+  const stations = data?.results.data || [];
+
+  const dataFiltered: IStation[] = applyFilter({
+    inputData: stations,
     comparator: getComparator(table.order, table.orderBy),
     filterName,
   });
@@ -46,51 +71,31 @@ export function StationListView() {
 
   return (
     <DashboardContent>
-    <CustomBreadcrumbs
-          heading="لیست"
-          links={[
-            { name: 'داشبورد', href: paths.dashboard.root },
-            {
-              name: 'ایستگاه ها',
-              href: paths.dashboard.station.root,
-            },
-            { name: 'لیست' },
-          ]}
-          action={
-            <Button
-              component={RouterLink}
-              href={paths.dashboard.station.new}
-              variant="contained"
-              startIcon={<Iconify icon="mingcute:add-line" />}
-            >
-              ایستگاه جدید
-            </Button>
-          }
-          sx={{ mb: { xs: 3, md: 5 } }}
-        />
-      {/* <Box
-        sx={{
-          mb: 5,
-          display: 'flex',
-          alignItems: 'center',
-        }}
-      >
-        <Typography variant="h4" sx={{ flexGrow: 1 }}>
-          ایستگاه ها
-        </Typography>
-        <Button
-          component={RouterLink}
-          href={paths.dashboard.station.new}
-          variant="contained"
-          startIcon={<Iconify icon="mingcute:add-line" />}
-        >
-          ایستگاه جدید
-        </Button>
-      </Box> */}
+      <CustomBreadcrumbs
+        heading="لیست"
+        links={[
+          { name: 'داشبورد', href: paths.dashboard.root },
+          {
+            name: 'ایستگاه ها',
+            href: paths.dashboard.station.root,
+          },
+          { name: 'لیست' },
+        ]}
+        action={
+          <Button
+            component={RouterLink}
+            href={paths.dashboard.station.new}
+            variant="contained"
+            startIcon={<Iconify icon="mingcute:add-line" />}
+          >
+            ایستگاه جدید
+          </Button>
+        }
+        sx={{ mb: { xs: 3, md: 5 } }}
+      />
 
       <Card>
-        <UserTableToolbar
-          numSelected={table.selected.length}
+        <StationTableToolbar
           filterName={filterName}
           onFilterName={(event: React.ChangeEvent<HTMLInputElement>) => {
             setFilterName(event.target.value);
@@ -101,26 +106,10 @@ export function StationListView() {
         <Scrollbar>
           <TableContainer sx={{ overflow: 'unset' }}>
             <Table sx={{ minWidth: 800 }}>
-              <UserTableHead
-                order={table.order}
-                orderBy={table.orderBy}
-                rowCount={_users.length}
+              <TableHeadCustom
+                headLabel={TABLE_HEAD}
+                rowCount={stations.length}
                 numSelected={table.selected.length}
-                onSort={table.onSort}
-                onSelectAllRows={(checked) =>
-                  table.onSelectAllRows(
-                    checked,
-                    _users.map((user) => user.id)
-                  )
-                }
-                headLabel={[
-                  { id: 'name', label: 'Name' },
-                  { id: 'company', label: 'Company' },
-                  { id: 'role', label: 'Role' },
-                  { id: 'isVerified', label: 'Verified', align: 'center' },
-                  { id: 'status', label: 'Status' },
-                  { id: '' },
-                ]}
               />
               <TableBody>
                 {dataFiltered
@@ -129,7 +118,7 @@ export function StationListView() {
                     table.page * table.rowsPerPage + table.rowsPerPage
                   )
                   .map((row) => (
-                    <UserTableRow
+                    <StationTableRow
                       key={row.id}
                       row={row}
                       selected={table.selected.includes(row.id)}
@@ -139,10 +128,10 @@ export function StationListView() {
 
                 <TableEmptyRows
                   height={68}
-                  emptyRows={emptyRows(table.page, table.rowsPerPage, _users.length)}
+                  emptyRows={emptyRows(table.page, table.rowsPerPage, dataFiltered.length)}
                 />
 
-                {notFound && <TableNoData searchQuery={filterName} />}
+                {notFound && <TableNoData notFound={notFound} />}
               </TableBody>
             </Table>
           </TableContainer>
@@ -151,7 +140,7 @@ export function StationListView() {
         <TablePagination
           component="div"
           page={table.page}
-          count={_users.length}
+          count={stations.length}
           rowsPerPage={table.rowsPerPage}
           onPageChange={table.onChangePage}
           rowsPerPageOptions={[5, 10, 25]}

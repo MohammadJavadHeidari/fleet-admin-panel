@@ -12,7 +12,7 @@ export type ConfigValue = {
 };
 
 export const CONFIG: ConfigValue = {
-  appName: 'داشبورد مدیریتی',
+  appName: 'پنل مدیریت',
   appVersion: packageJson.version,
   auth: {
     pathAfterLogin: paths.dashboard.root,

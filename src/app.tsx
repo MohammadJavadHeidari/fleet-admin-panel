@@ -1,12 +1,15 @@
 import 'src/global.css';
 
-import { useEffect } from 'react';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-import { usePathname } from 'src/routes/hooks';
+import { useScrollToTop } from 'src/hooks/use-scroll-to-top';
 
 import { ThemeProvider } from 'src/theme/theme-provider';
 
-import { AuthProvider } from 'src/auth/context';
+import { SnackbarProvider } from 'src/components/snackbar';
+
+import { AuthProvider, AuthConsumer } from 'src/auth/context';
 
 // ----------------------------------------------------------------------
 
@@ -14,24 +17,22 @@ type AppProps = {
   children: React.ReactNode;
 };
 
+// Create a client
+const queryClient = new QueryClient();
+
 export default function App({ children }: AppProps) {
   useScrollToTop();
 
   return (
-    <AuthProvider>
-      <ThemeProvider>{children}</ThemeProvider>
-    </AuthProvider>
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <ThemeProvider>
+          <SnackbarProvider>
+            <AuthConsumer>{children}</AuthConsumer>
+          </SnackbarProvider>
+        </ThemeProvider>
+      </AuthProvider>
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
   );
-}
-
-// ----------------------------------------------------------------------
-
-function useScrollToTop() {
-  const pathname = usePathname();
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
-
-  return null;
 }

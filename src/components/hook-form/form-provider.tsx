@@ -4,17 +4,17 @@ import { FormProvider as Form } from 'react-hook-form';
 
 // ----------------------------------------------------------------------
 
-type Props<T extends FieldValues> = {
+type Props = {
   children: React.ReactNode;
-  methods: UseFormReturn<T>;
+  methods: UseFormReturn<any>;
   onSubmit?: VoidFunction;
 };
 
-export default function FormProvider<T extends FieldValues>({
+export default function FormProvider({
   children,
   onSubmit,
   methods,
-}: Props<T>) {
+}: Props) {
   return (
     <Form {...methods}>
       <form onSubmit={onSubmit}>{children}</form>

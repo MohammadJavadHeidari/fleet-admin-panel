@@ -123,7 +123,7 @@ export function SignInView() {
   );
 
   return (
-    <FormProvider<SignInFormValues> methods={methods} onSubmit={handleSubmit(onSubmit)}>
+    <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
       <Box
         sx={{
           gap: 1.5,

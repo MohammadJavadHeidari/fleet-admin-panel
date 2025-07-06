@@ -1,3 +1,5 @@
+import type { AxiosRequestConfig } from 'axios';
+
 import axios from 'axios';
 
 // ----------------------------------------------------------------------
@@ -11,17 +13,35 @@ axiosInstance.interceptors.response.use(
 
 export default axiosInstance;
 
+// ----------------------------------------------------------------------
+
+export const fetcher = async (args: string | [string, AxiosRequestConfig]) => {
+  try {
+    const [url, config] = Array.isArray(args) ? args : [args];
+
+    const res = await axiosInstance.get(url, { ...config });
+
+    return res.data;
+  } catch (error) {
+    console.error('Failed to fetch:', error);
+    throw error;
+  }
+};
+
+// ----------------------------------------------------------------------
+
 export const API_ENDPOINTS = {
   auth: {
     me: '/auth/me',
     signIn: '/auth/sign-in',
     register: '/auth/register',
   },
-  // mail: {
-  //   list: '/mail/list',
-  //   details: '/mail/details',
-  //   labels: '/mail/labels',
-  // },
+  station: {
+    list: '/station/list',
+    new: '/station/new',
+    //   details: '/mail/details',
+    //   labels: '/mail/labels',
+  },
   // post: {
   //   list: '/post/list',
   //   details: '/post/details',
