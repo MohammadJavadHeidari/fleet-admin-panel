@@ -36,27 +36,20 @@ export const API_ENDPOINTS = {
     signIn: '/auth/sign-in',
     register: '/auth/register',
   },
+  employee: {
+    list: '/employee/list',
+    new: '/employee/new',
+  },
+  driver: {
+    list: '/driver/list',
+    new: '/driver/new',
+  },
   station: {
     list: '/station/list',
     new: '/station/new',
-    //   details: '/mail/details',
-    //   labels: '/mail/labels',
   },
   route: {
     list: '/route/list',
     new: '/route/new',
-    //   details: '/mail/details',
-    //   labels: '/mail/labels',
   },
-  // post: {
-  //   list: '/post/list',
-  //   details: '/post/details',
-  //   latest: '/post/latest',
-  //   search: '/post/search',
-  // },
-  // product: {
-  //   list: '/product/list',
-  //   details: '/product/details',
-  //   search: '/product/search',
-  // },
 };

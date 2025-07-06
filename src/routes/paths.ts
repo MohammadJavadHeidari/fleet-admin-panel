@@ -15,7 +15,16 @@ export const paths = {
   // DASHBOARD
   dashboard: {
     root: '/',
-    employee: `${ROOTS.DASHBOARD}/employee`,
+    employee: {
+      root: `${ROOTS.DASHBOARD}/employee`,
+      list: `${ROOTS.DASHBOARD}/employee/list`,
+      new: `${ROOTS.DASHBOARD}/employee/new`,
+    },
+    driver: {
+      root: `${ROOTS.DASHBOARD}/driver`,
+      list: `${ROOTS.DASHBOARD}/driver/list`,
+      new: `${ROOTS.DASHBOARD}/driver/new`,
+    },
     station: {
       root: `${ROOTS.DASHBOARD}/station`,
       list: `${ROOTS.DASHBOARD}/station/list`,

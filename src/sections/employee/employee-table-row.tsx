@@ -1,3 +1,5 @@
+import type { IEmployee } from 'src/types/employee';
+
 import { useState, useCallback } from 'react';
 
 import Box from '@mui/material/Box';
@@ -15,23 +17,11 @@ import { Iconify } from 'src/components/iconify';
 
 // ----------------------------------------------------------------------
 
-export type UserProps = {
-  id: string;
-  name: string;
-  role: string;
-  status: string;
-  company: string;
-  avatarUrl: string;
-  isVerified: boolean;
+type EmployeeTableRowProps = {
+  row: IEmployee;
 };
 
-type UserTableRowProps = {
-  row: UserProps;
-  selected: boolean;
-  onSelectRow: () => void;
-};
-
-export function UserTableRow({ row, selected, onSelectRow }: UserTableRowProps) {
+export function EmployeeTableRow({ row }: EmployeeTableRowProps) {
   const [openPopover, setOpenPopover] = useState<HTMLButtonElement | null>(null);
 
   const handleOpenPopover = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
@@ -44,45 +34,12 @@ export function UserTableRow({ row, selected, onSelectRow }: UserTableRowProps) 
 
   return (
     <>
-      <TableRow hover tabIndex={-1} role="checkbox" selected={selected}>
-        <TableCell padding="checkbox">
-          <Checkbox disableRipple checked={selected} onChange={onSelectRow} />
-        </TableCell>
-
-        <TableCell component="th" scope="row">
-          <Box
-            sx={{
-              gap: 2,
-              display: 'flex',
-              alignItems: 'center',
-            }}
-          >
-            <Avatar alt={row.name} src={row.avatarUrl} />
-            {row.name}
-          </Box>
-        </TableCell>
-
-        <TableCell>{row.company}</TableCell>
-
-        <TableCell>{row.role}</TableCell>
-
-        <TableCell align="center">
-          {row.isVerified ? (
-            <Iconify width={22} icon="solar:check-circle-bold" sx={{ color: 'success.main' }} />
-          ) : (
-            '-'
-          )}
-        </TableCell>
-
-        <TableCell>
-          <Label color={(row.status === 'banned' && 'error') || 'success'}>{row.status}</Label>
-        </TableCell>
-
-        <TableCell align="right">
-          <IconButton onClick={handleOpenPopover}>
-            <Iconify icon="eva:more-vertical-fill" />
-          </IconButton>
-        </TableCell>
+      <TableRow hover tabIndex={-1} role="checkbox">
+        <TableCell>{row.firstName}</TableCell>
+        <TableCell>{row.lastName}</TableCell>
+        <TableCell>{row.phoneNumber}</TableCell>
+        <TableCell>{row.email}</TableCell>
+        <TableCell>{row.station.name}</TableCell>
       </TableRow>
 
       <Popover

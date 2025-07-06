@@ -21,12 +21,12 @@ export const navData = [
   },
   {
     title: 'کارمندان',
-    path: '/employee',
+    path: paths.dashboard.employee.list,
     icon: icon('ic-user'),
   },
   {
     title: 'رانندگان',
-    path: '/driver',
+    path: paths.dashboard.driver.list,
     icon: icon('ic-driver'),
   },
   {
