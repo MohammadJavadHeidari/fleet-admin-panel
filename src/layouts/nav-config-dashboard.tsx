@@ -36,7 +36,7 @@ export const navData = [
   },
   {
     title: 'مسیر ها',
-    path: '/routes',
+    path: paths.dashboard.route.list,
     icon: icon('ic-route'),
   },
 ];

@@ -42,6 +42,12 @@ export const API_ENDPOINTS = {
     //   details: '/mail/details',
     //   labels: '/mail/labels',
   },
+  route: {
+    list: '/route/list',
+    new: '/route/new',
+    //   details: '/mail/details',
+    //   labels: '/mail/labels',
+  },
   // post: {
   //   list: '/post/list',
   //   details: '/post/details',

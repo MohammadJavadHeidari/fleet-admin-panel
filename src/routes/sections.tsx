@@ -22,6 +22,9 @@ export const ProductsPage = lazy(() => import('src/pages/products'));
 // Station
 export const StationListPage = lazy(() => import('src/pages/station/list'));
 export const StationCreatePage = lazy(() => import('src/pages/station/new'));
+// Route
+export const RouteListPage = lazy(() => import('src/pages/route/list'));
+export const RouteCreatePage = lazy(() => import('src/pages/route/new'));
 // 
 export const Page404 = lazy(() => import('src/pages/page-not-found'));
 
@@ -67,6 +70,14 @@ export const routesSection: RouteObject[] = [
           { element: <StationListPage />, index: true },
           { path: 'list', element: <StationListPage /> },
           { path: 'new', element: <StationCreatePage /> },
+        ],
+      },
+      {
+        path: 'route',
+        children: [
+          { element: <RouteListPage />, index: true },
+          { path: 'list', element: <RouteListPage /> },
+          { path: 'new', element: <RouteCreatePage /> },
         ],
       },
     ],

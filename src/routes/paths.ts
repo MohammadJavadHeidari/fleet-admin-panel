@@ -21,5 +21,10 @@ export const paths = {
       list: `${ROOTS.DASHBOARD}/station/list`,
       new: `${ROOTS.DASHBOARD}/station/new`,
     },
+    route: {
+      root: `${ROOTS.DASHBOARD}/route`,
+      list: `${ROOTS.DASHBOARD}/route/list`,
+      new: `${ROOTS.DASHBOARD}/route/new`,
+    },
   },
 };
