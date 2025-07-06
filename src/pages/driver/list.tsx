@@ -1,13 +1,13 @@
-import { StationListView } from 'src/sections/station/view';
+import { DriverListView } from 'src/sections/driver/view';
 
 // ----------------------------------------------------------------------
 
 export default function Page() {
   return (
     <>
-      <title>ایستگاه ها</title>
+      <title>رانندگان</title>
 
-      <StationListView />
+      <DriverListView />
     </>
   );
 }

@@ -20,6 +20,10 @@ export const DashboardPage = lazy(() => import('src/pages/dashboard'));
 export const EmployeeListPage = lazy(() => import('src/pages/employee/list'));
 export const EmployeeCreatePage = lazy(() => import('src/pages/employee/new'));
 
+// Driver
+export const DriverListPage = lazy(() => import('src/pages/driver/list'));
+export const DriverCreatePage = lazy(() => import('src/pages/driver/new'));
+
 // Station
 export const StationListPage = lazy(() => import('src/pages/station/list'));
 export const StationCreatePage = lazy(() => import('src/pages/station/new'));
@@ -76,6 +80,11 @@ export const routesSection: RouteObject[] = [
       },
       {
         path: 'driver',
+        children: [
+          { element: <DriverListPage />, index: true },
+          { path: 'list', element: <DriverListPage /> },
+          { path: 'new', element: <DriverCreatePage /> },
+        ],
       },
       {
         path: 'station',

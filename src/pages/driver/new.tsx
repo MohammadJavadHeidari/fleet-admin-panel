@@ -1,15 +1,15 @@
 import { CONFIG } from 'src/config-global';
 
-import { StationCreateView } from 'src/sections/station/view';
+import { DriverCreateView } from 'src/sections/driver/view';
 
 // ----------------------------------------------------------------------
 
 export default function Page() {
   return (
     <>
-      <title>{`ایجاد ایستگاه جدید - ${CONFIG.appName}`}</title>
+      <title>{`ایجاد راننده جدید - ${CONFIG.appName}`}</title>
 
-      <StationCreateView />
+      <DriverCreateView />
     </>
   );
 }
