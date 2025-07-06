@@ -1,4 +1,4 @@
-import type { IStation } from 'src/types/station';
+import type { IRoute } from 'src/types/route';
 
 import { useState, useCallback } from 'react';
 
@@ -17,13 +17,13 @@ import { Iconify } from 'src/components/iconify';
 
 // ----------------------------------------------------------------------
 
-type StationTableRowProps = {
-  row: IStation;
+type RouteTableRowProps = {
+  row: IRoute;
   selected: boolean;
   onSelectRow: () => void;
 };
 
-export function StationTableRow({ row, selected, onSelectRow }: StationTableRowProps) {
+export function RouteTableRow({ row, selected, onSelectRow }: RouteTableRowProps) {
   const [openPopover, setOpenPopover] = useState<HTMLButtonElement | null>(null);
 
   const handleOpenPopover = useCallback((event: React.MouseEvent<HTMLButtonElement>) => {
@@ -34,10 +34,12 @@ export function StationTableRow({ row, selected, onSelectRow }: StationTableRowP
     setOpenPopover(null);
   }, []);
 
+  const firstStation = row.stations[0];
+  const lastStation = row.stations[row.stations.length - 1];
+
   return (
     <>
       <TableRow hover tabIndex={-1} role="checkbox" selected={selected}>
-
         <TableCell component="th" scope="row">
           <Box
             sx={{
@@ -50,19 +52,14 @@ export function StationTableRow({ row, selected, onSelectRow }: StationTableRowP
           </Box>
         </TableCell>
 
-        <TableCell>{row.address}</TableCell>
+        <TableCell>{row.stations.length}</TableCell>
 
         <TableCell>
-          <Label color={(row.isActive === false && 'error') || 'success'}>
-            {row.isActive ? 'فعال' : 'غیر فعال'}
-          </Label>
+          {firstStation.name} - {firstStation.address}
         </TableCell>
-
-        {/* <TableCell align="right">
-          <IconButton onClick={handleOpenPopover}>
-            <Iconify icon="eva:more-vertical-fill" />
-          </IconButton>
-        </TableCell> */}
+        <TableCell>
+          {lastStation.name} - {lastStation.address}
+        </TableCell>
       </TableRow>
 
       <Popover

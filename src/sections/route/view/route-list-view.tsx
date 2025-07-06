@@ -28,8 +28,8 @@ import LoadingScreen from 'src/components/loading-screen';
 import CustomBreadcrumbs from 'src/components/custom-breadcrumbs';
 import { TableNoData, TableEmptyRows, TableHeadCustom } from 'src/components/table';
 
-import { StationTableRow } from '../station-table-row';
-import { StationTableToolbar } from '../station-table-toolbar';
+import { RouteTableRow } from '../route-table-row';
+import { RouteTableToolbar } from '../route-table-toolbar';
 import { emptyRows, applyFilter, getComparator } from '../utils';
 
 // ----------------------------------------------------------------------
@@ -42,9 +42,9 @@ const useGetRouteList = () =>
 
 const TABLE_HEAD = [
   { id: 'name', label: 'نام' },
-  { id: 'address', label: 'آدرس' },
-  { id: 'status', label: 'وضعیت' },
-  // { id: '' },
+  { id: 'stationCount', label: 'تعداد ایستگاه ها' },
+  { id: 'firstStation', label: 'ایستگاه اول' },
+  { id: 'lastStation', label: 'ایستگاه آخر' },
 ];
 
 export function RouteListView() {
@@ -95,7 +95,7 @@ export function RouteListView() {
       />
 
       <Card>
-        <StationTableToolbar
+        <RouteTableToolbar
           filterName={filterName}
           onFilterName={(event: React.ChangeEvent<HTMLInputElement>) => {
             setFilterName(event.target.value);
@@ -111,14 +111,14 @@ export function RouteListView() {
                 rowCount={routes.length}
                 numSelected={table.selected.length}
               />
-              {/* <TableBody>
+              <TableBody>
                 {dataFiltered
                   .slice(
                     table.page * table.rowsPerPage,
                     table.page * table.rowsPerPage + table.rowsPerPage
                   )
                   .map((row) => (
-                    <StationTableRow
+                    <RouteTableRow
                       key={row.id}
                       row={row}
                       selected={table.selected.includes(row.id)}
@@ -132,12 +132,12 @@ export function RouteListView() {
                 />
 
                 {notFound && <TableNoData notFound={notFound} />}
-              </TableBody> */}
+              </TableBody>
             </Table>
           </TableContainer>
         </Scrollbar>
 
-        {/* <TablePagination
+        <TablePagination
           component="div"
           page={table.page}
           count={routes.length}
@@ -145,7 +145,7 @@ export function RouteListView() {
           onPageChange={table.onChangePage}
           rowsPerPageOptions={[5, 10, 25]}
           onRowsPerPageChange={table.onChangeRowsPerPage}
-        /> */}
+        />
       </Card>
     </DashboardContent>
   );

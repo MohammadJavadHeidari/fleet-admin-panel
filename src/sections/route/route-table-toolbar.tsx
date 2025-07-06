@@ -9,15 +9,15 @@ import { Iconify } from 'src/components/iconify';
 
 // ----------------------------------------------------------------------
 
-type StationTableToolbarProps = {
+type RouteTableToolbarProps = {
   filterName: string;
   onFilterName: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-export function StationTableToolbar({
+export function RouteTableToolbar({
   filterName,
   onFilterName,
-}: StationTableToolbarProps) {
+}: RouteTableToolbarProps) {
   return (
     <Toolbar
       sx={{
@@ -31,13 +31,12 @@ export function StationTableToolbar({
         fullWidth
         value={filterName}
         onChange={onFilterName}
-        placeholder="جستجوی ایستگاه..."
+        placeholder="جستجوی مسیر..."
         startAdornment={
           <InputAdornment position="start">
             <Iconify width={20} icon="eva:search-fill" sx={{ color: 'text.disabled' }} />
           </InputAdornment>
         }
-        // sx={{ maxWidth: 320 }}
       />
     </Toolbar>
   );
