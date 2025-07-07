@@ -32,7 +32,7 @@
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
     "@fontsource-variable/dm-sans": "^5.2.5",
-    "@fontsource/barlow": "^5.2.5",
+    "@fontsource/vazirmatn": "^5.2.6",
     "@hookform/resolvers": "^5.1.1",
     "@iconify/react": "^5.2.1",
     "@mapbox/polyline": "^1.2.1",

@@ -272,10 +272,10 @@
   resolved "https://registry.npmjs.org/@fontsource-variable/dm-sans/-/dm-sans-5.2.5.tgz"
   integrity sha512-ynWdb1Ncn5ywUOE6OkTsvgjkiZKj+xM/GS2iVE47MBvS3AlfOSyOy3xynfkQsM3ngaxdCamT/06hZGAgPmao0A==
 
-"@fontsource/barlow@^5.2.5":
-  version "5.2.5"
-  resolved "https://registry.npmjs.org/@fontsource/barlow/-/barlow-5.2.5.tgz"
-  integrity sha512-p+2XXEM7v85kbn0Dh8g0YLMjTCDiRCAi9nHik6w/2owZ9CkT1yYGGgaUMshJRqykh7efv1gE0QxAkOhZHd8tEg==
+"@fontsource/vazirmatn@^5.2.6":
+  version "5.2.6"
+  resolved "https://registry.npmjs.org/@fontsource/vazirmatn/-/vazirmatn-5.2.6.tgz"
+  integrity sha512-ey2PVvuFxkJajFu3DFa4rMLDO7GuFIe7+l4XM5peWBC9auoUq/4W5ncR7sqt8HRdZ9+BtqVUWkDu5mu4pTvDZw==
 
 "@hookform/resolvers@^5.1.1":
   version "5.1.1"
