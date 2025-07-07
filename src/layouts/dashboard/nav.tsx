@@ -17,7 +17,7 @@ import { Scrollbar } from 'src/components/scrollbar';
 
 import { WorkspacesPopover } from '../components/workspaces-popover';
 
-import type { NavItem } from '../nav-config-dashboard';
+import type { NavItem } from '../nav-config-dashboard-employee';
 import type { WorkspacesPopoverProps } from '../components/workspaces-popover';
 
 // ----------------------------------------------------------------------

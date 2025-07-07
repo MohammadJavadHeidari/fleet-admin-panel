@@ -14,6 +14,7 @@ type AuthGuardProps = {
 };
 
 export default function AuthGuard({ children }: AuthGuardProps) {
+  console.log(`Auth Guard`);
   const router = useRouter();
 
   const pathname = usePathname();
@@ -40,7 +41,7 @@ export default function AuthGuard({ children }: AuthGuardProps) {
     }
 
     if (!authenticated) {
-      const href = `${paths.auth.signIn}?${createQueryString('returnTo', pathname)}`;
+      const href = `${paths.admin.auth.signIn}?${createQueryString('returnTo', pathname)}`;
 
       router.replace(href);
       return;
