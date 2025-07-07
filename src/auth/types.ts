@@ -19,12 +19,21 @@ export type AuthStateType = {
   user: AuthUserType;
 };
 
+export type OtpVerifyParams = {
+  phoneNumber: string;
+  code: string;
+};
+
 // ----------------------------------------------------------------------
 export type AuthContextType = {
   user: AuthUserType;
   loading: boolean;
   authenticated: boolean;
   unauthenticated: boolean;
-  login: (email: string, password: string) => Promise<void>;
+  login?: (email: string, password: string) => Promise<void>;
+  // OTP for login driver and employee
+  requestOtp?: (phoneNumber: string) => Promise<void>;
+  verifyOtp?: (phoneNumber: string, otp: string) => Promise<void>;
+  //
   logout: () => Promise<void>;
 };

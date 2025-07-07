@@ -56,7 +56,7 @@ export function SignInView() {
   const onSubmit = useCallback(
     async (data: SignInFormValues) => {
       try {
-        await login(data.email, data.password);
+        await login?.(data.email, data.password);
 
         window.location.href = returnTo || CONFIG.admin.auth.pathAfterLogin;
       } catch (error) {

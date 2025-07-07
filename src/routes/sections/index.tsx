@@ -8,7 +8,7 @@ import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgr
 
 //
 import { adminRoutes } from './admin';
-// import { driverRoutes } from './driver';
+import { driverRoutes } from './driver';
 // import { employeeRoutes } from './employee';
 
 // ----------------------------------------------------------------------
@@ -41,10 +41,10 @@ export const routesSection: RouteObject[] = [
   ...adminRoutes,
 
   // Driver
-//   ...driverRoutes,
-  
+  ...driverRoutes,
+
   // Employee
-//   ...employeeRoutes,
+  //   ...employeeRoutes,
 
   {
     path: '404',

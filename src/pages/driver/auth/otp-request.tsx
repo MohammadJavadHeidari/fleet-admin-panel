@@ -1,13 +1,13 @@
-import { SignInView } from 'src/sections/admin/auth';
+import { OtpRequestView } from 'src/sections/driver/auth';
 
 // ----------------------------------------------------------------------
 
 export default function Page() {
   return (
     <>
-      <title>ورود</title>
+      <title>ورود راننده</title>
 
-      <SignInView />
+      <OtpRequestView />
     </>
   );
 }

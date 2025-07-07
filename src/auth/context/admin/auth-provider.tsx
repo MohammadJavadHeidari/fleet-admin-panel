@@ -111,10 +111,7 @@ export function AuthProvider({ children }: Props) {
 
   // LOGIN
   const login = useCallback(async (email: string, password: string) => {
-    const data = {
-      email,
-      password,
-    };
+    const data = { email, password };
 
     const response = await axios.post(API_ENDPOINTS.admin.auth.signIn, data);
 

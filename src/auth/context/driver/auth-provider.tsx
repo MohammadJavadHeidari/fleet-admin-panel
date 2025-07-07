@@ -11,6 +11,7 @@ import type { AuthUserType, ActionMapType, AuthStateType } from '../../types';
 
 enum Types {
   INITIAL = 'INITIAL',
+  REQUEST_OTP = 'REQUEST_OTP',
   LOGIN = 'LOGIN',
   LOGOUT = 'LOGOUT',
 }
@@ -18,6 +19,9 @@ enum Types {
 type Payload = {
   [Types.INITIAL]: {
     user: AuthUserType;
+  };
+  [Types.REQUEST_OTP]: {
+    phoneNumber: string;
   };
   [Types.LOGIN]: {
     user: AuthUserType;
@@ -39,6 +43,15 @@ const reducer = (state: AuthStateType, action: ActionsType) => {
     return {
       loading: false,
       user: action.payload.user,
+    };
+  }
+  if (action.type === Types.REQUEST_OTP) {
+    return {
+      ...state,
+      user: {
+        ...state.user,
+        phoneNumber: action.payload.phoneNumber,
+      },
     };
   }
   if (action.type === Types.LOGIN) {
@@ -109,26 +122,44 @@ export function AuthProvider({ children }: Props) {
     initialize();
   }, [initialize]);
 
-  // LOGIN
-  const login = useCallback(async (email: string, password: string) => {
-    const data = {
-      email,
-      password,
-    };
+  // REQUEST OTP
+  const requestOtp = useCallback(async (phoneNumber: string) => {
+    const data = { phoneNumber };
 
     const response = await axios.post(API_ENDPOINTS.driver.auth.requestOtp, data);
 
+    console.log({ requestOtp: response.data });
+
+    dispatch({
+      type: Types.REQUEST_OTP,
+      payload: {
+        phoneNumber,
+      },
+    });
+  }, []);
+
+  // VERIFY OTP
+
+  const verifyOtp = useCallback(async (phoneNumber: string, otp: string) => {
+    const data = { phoneNumber, otp };
+
+    const response = await axios.post(API_ENDPOINTS.driver.auth.verifyOtp, data);
+
     const {
+      success,
+      message,
       data: { accessToken, ...user },
     } = response.data;
+
+    if (!success) {
+      throw new Error(message);
+    }
 
     setSession(accessToken);
 
     dispatch({
       type: Types.LOGIN,
-      payload: {
-        user,
-      },
+      payload: { user },
     });
   }, []);
 
@@ -154,10 +185,11 @@ export function AuthProvider({ children }: Props) {
       authenticated: status === 'authenticated',
       unauthenticated: status === 'unauthenticated',
       //
-      login,
+      requestOtp,
+      verifyOtp,
       logout,
     }),
-    [login, logout, state.user, status]
+    [requestOtp, verifyOtp, logout, state.user, status]
   );
 
   return <AuthContext.Provider value={memoizedValue}>{children}</AuthContext.Provider>;

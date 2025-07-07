@@ -41,7 +41,19 @@ export default function AuthGuard({ children }: AuthGuardProps) {
     }
 
     if (!authenticated) {
-      const href = `${paths.admin.auth.signIn}?${createQueryString('returnTo', pathname)}`;
+      const method = pathname.split('/')[1];
+
+      const signInPath = {
+        admin: paths.admin.auth.signIn,
+        driver: paths.driver.auth.requestOtp,
+        employee: paths.employee.auth.requestOtp,
+      }[method];
+
+      let href = `${signInPath}`;
+
+      if (method === 'admin') {
+        href += `?${createQueryString('returnTo', pathname)}`;
+      }
 
       router.replace(href);
       return;

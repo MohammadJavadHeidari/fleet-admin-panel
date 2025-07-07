@@ -10,5 +10,6 @@ export function layoutSectionVars(theme: Theme) {
     '--layout-header-zIndex': theme.zIndex.appBar + 1,
     '--layout-header-mobile-height': '64px',
     '--layout-header-desktop-height': '72px',
+    '--layout-auth-mobile-width': '100%',
   };
 }
