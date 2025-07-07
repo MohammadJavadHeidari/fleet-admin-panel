@@ -68,6 +68,12 @@ export const API_ENDPOINTS = {
       requestOtp: `${DRIVER_BASE_URL}/auth/otp/request`,
       verifyOtp: `${DRIVER_BASE_URL}/auth/otp/verify`,
     },
+    location: {
+      save: `${DRIVER_BASE_URL}/location/save`,
+    },
+    route: {
+      assigned: `${DRIVER_BASE_URL}/route/assigned`,
+    },
   },
   station: {
     list: '/station/list',

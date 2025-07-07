@@ -12,7 +12,7 @@ import { AuthGuard, GuestGuard } from 'src/auth/guard';
 // ----------------------------------------------------------------------
 
 // Overview
-const IndexPage = lazy(() => import('src/pages/admin/dashboard'));
+const IndexPage = lazy(() => import('src/pages/driver/dashboard'));
 // Auth
 const OtpRequestPage = lazy(() => import('src/pages/driver/auth/otp-request'));
 const OtpVerifyPage = lazy(() => import('src/pages/driver/auth/otp-verify'));

@@ -9,26 +9,27 @@ import { layoutClasses } from '../core/classes';
 
 // ----------------------------------------------------------------------
 
-export type DashboardContentProps = ContainerProps & {
+export type MobileContentProps = ContainerProps & {
   layoutQuery?: Breakpoint;
   disablePadding?: boolean;
 };
 
-export function DashboardContent({
+export function MobileContent({
   sx,
   children,
   className,
   disablePadding,
-  maxWidth = 'lg',
-  layoutQuery = 'lg',
+  maxWidth = 'sm',
+  layoutQuery = 'sm',
   ...other
-}: DashboardContentProps) {
+}: MobileContentProps) {
   return (
     <Container
       className={mergeClasses([layoutClasses.content, className])}
-      maxWidth={maxWidth}
+      maxWidth='sm'
       sx={[
         (theme) => ({
+          position: 'relative',
           display: 'flex',
           flex: '1 1 auto',
           flexDirection: 'column',

@@ -1,10 +1,15 @@
-import type { INeshanCoordinates, INeshanReverseGeocodingResponse } from 'src/types/neshan';
+import type {
+  INeshanCoordinates,
+  INeshanDirectionRequest,
+  INeshanDirectionResponse,
+  INeshanReverseGeocodingResponse,
+} from 'src/types/neshan';
 
 import axios from 'axios';
 
 // Create a separate axios instance for Neshan API
 const neshanAxios = axios.create({
-  baseURL: 'https://api.neshan.org/v5',
+  baseURL: 'https://api.neshan.org',
   timeout: 30000,
 });
 
@@ -56,11 +61,33 @@ export class NeshanAPI {
   ): Promise<INeshanReverseGeocodingResponse> {
     try {
       const response = await neshanAxios.get<INeshanReverseGeocodingResponse>(
-        `/reverse?lat=${coordinates.lat}&lng=${coordinates.lng}`
+        `/v5/reverse?lat=${coordinates.lat}&lng=${coordinates.lng}`
       );
       return response.data;
     } catch (error) {
       console.error('Reverse geocoding failed:', error);
+      throw error;
+    }
+  }
+
+  static async getDirection(params: INeshanDirectionRequest): Promise<INeshanDirectionResponse> {
+    try {
+      const baseURL = '/v4/direction/no-traffic';
+
+      const queryParams = new URLSearchParams({
+        origin: params.origin,
+        destination: params.destination,
+        vehicle: params.vehicle || 'car',
+        ...(params.waypoints && { waypoints: params.waypoints.join('|') }),
+        ...(params.avoidTrafficZone && { avoidTrafficZone: 'true' }),
+        ...(params.avoidOddEvenZone && { avoidOddEvenZone: 'true' }),
+        ...(params.alternative && { alternative: 'true' }),
+      });
+
+      const response = await neshanAxios.get<INeshanDirectionResponse>(`${baseURL}?${queryParams}`);
+      return response.data;
+    } catch (error) {
+      console.error('Direction API failed:', error);
       throw error;
     }
   }

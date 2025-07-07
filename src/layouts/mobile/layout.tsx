@@ -54,7 +54,7 @@ export function MobileLayout({
   const renderHeader = () => {
     const headerSlotProps: HeaderSectionProps['slotProps'] = {
       container: {
-        maxWidth: false,
+        maxWidth: 'sm',
       },
     };
 
@@ -64,31 +64,34 @@ export function MobileLayout({
           This is an info Alert.
         </Alert>
       ),
-      leftArea: (
-        <>
-          {/** @slot Nav mobile */}
-          <MenuButton
-            onClick={onOpen}
-            sx={{ mr: 1, ml: -1, [theme.breakpoints.up(layoutQuery)]: { display: 'none' } }}
-          />
-          {/* <NavMobile data={navData} open={open} onClose={onClose} workspaces={_workspaces} /> */}
-        </>
-      ),
-      rightArea: (
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: 0, sm: 0.75 } }}>
-          {/** @slot Searchbar */}
-          {/* <Searchbar /> */}
+      leftArea: null, 
+      // leftArea: (
+      //   <>
+      //     {/** @slot Nav mobile */}
+      //     <MenuButton
+      //       onClick={onOpen}
+      //       sx={{ mr: 1, ml: -1, [theme.breakpoints.up(layoutQuery)]: { display: 'none' } }}
+      //     />
+      //     {/* <NavMobile data={navData} open={open} onClose={onClose} workspaces={_workspaces} /> */}
+      //   </>
+      // ),
+      rightArea: null,
 
-          {/** @slot Language popover */}
-          {/* <LanguagePopover data={_langs} /> */}
+      // rightArea: (
+      //   <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: 0, sm: 0.75 } }}>
+      //     {/** @slot Searchbar */}
+      //     {/* <Searchbar /> */}
 
-          {/** @slot Notifications popover */}
-          {/* <NotificationsPopover data={_notifications} /> */}
+      //     {/** @slot Language popover */}
+      //     {/* <LanguagePopover data={_langs} /> */}
 
-          {/** @slot Account drawer */}
-          <AccountPopover data={_account} />
-        </Box>
-      ),
+      //     {/** @slot Notifications popover */}
+      //     {/* <NotificationsPopover data={_notifications} /> */}
+
+      //     {/** @slot Account drawer */}
+      //     <AccountPopover data={_account} />
+      //   </Box>
+      // ),
     };
 
     return (
@@ -114,36 +117,28 @@ export function MobileLayout({
     //  *************************************** */
     // headerSection={renderHeader()}
     // /** **************************************
-    //  * @Sidebar
-    //  *************************************** */
-    // sidebarSection={
-    //   <NavDesktop data={navData} layoutQuery={layoutQuery} workspaces={_workspaces} />
-    // }
-    // /** **************************************
     //  * @Footer
     //  *************************************** */
     // footerSection={renderFooter()}
     // /** **************************************
     //  * @Styles
     //  *************************************** */
-    // cssVars={{ ...dashboardLayoutVars(theme), ...cssVars }}
-    // sx={[
-    //   {
-    //     [`& .${layoutClasses.sidebarContainer}`]: {
-    //       [theme.breakpoints.up(layoutQuery)]: {
-    //         pl: 'var(--layout-nav-vertical-width)',
-    //         transition: theme.transitions.create(['padding-left'], {
-    //           easing: 'var(--layout-transition-easing)',
-    //           duration: 'var(--layout-transition-duration)',
-    //         }),
-    //       },
-    //     },
-    //   },
-    //   ...(Array.isArray(sx) ? sx : [sx]),
-    // ]}
+    sx={[
+      {
+        [`& .${layoutClasses.sidebarContainer}`]: {
+          [theme.breakpoints.up(layoutQuery)]: {
+            pl: 'var(--layout-nav-vertical-width)',
+            transition: theme.transitions.create(['padding-left'], {
+              easing: 'var(--layout-transition-easing)',
+              duration: 'var(--layout-transition-duration)',
+            }),
+          },
+        },
+      },
+      ...(Array.isArray(sx) ? sx : [sx]),
+    ]}
     >
-      {/* {renderMain()} */}
-      {children}
+      {renderMain()}
     </LayoutSection>
   );
 }

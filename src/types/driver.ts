@@ -25,3 +25,5 @@ export type IDriverList = {
   data: IDriver[];
   total: number;
 };
+
+export type IAssignedRoute = [number, number][];
