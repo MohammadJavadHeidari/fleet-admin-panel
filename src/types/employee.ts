@@ -16,3 +16,10 @@ export type IEmployeeList = {
   data: IEmployee[];
   total: number;
 };
+
+export type IDriverLocation = {
+  driverLocation: {
+    lat: number;
+    lng: number;
+  };
+};

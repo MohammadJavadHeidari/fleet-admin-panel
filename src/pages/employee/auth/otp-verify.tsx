@@ -1,13 +1,13 @@
-import { SignInView } from 'src/sections/admin/auth';
+import { OtpVerifyView } from 'src/sections/employee/auth';
 
 // ----------------------------------------------------------------------
 
 export default function Page() {
   return (
     <>
-      <title>ورود</title>
+      <title>تایید کد</title>
 
-      <SignInView />
+      <OtpVerifyView />
     </>
   );
 }

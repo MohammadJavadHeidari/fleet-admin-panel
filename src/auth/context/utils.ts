@@ -51,7 +51,7 @@ export const tokenExpired = (exp: number) => {
   expiredTimer = setTimeout(() => {
     alert('Token expired');
 
-    sessionStorage.removeItem('accessToken');
+    sessionStorage.clear();
 
     window.location.href = paths.admin.auth.signIn;
   }, timeLeft);
@@ -59,9 +59,9 @@ export const tokenExpired = (exp: number) => {
 
 // ----------------------------------------------------------------------
 
-export const setSession = (accessToken: string | null) => {
+export const setSession = (key: string, accessToken: string | null) => {
   if (accessToken) {
-    sessionStorage.setItem('accessToken', accessToken);
+    sessionStorage.setItem(key, accessToken);
 
     axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
 
@@ -69,7 +69,7 @@ export const setSession = (accessToken: string | null) => {
     const { exp } = jwtDecode(accessToken); // ~3 days by minimals server
     tokenExpired(exp);
   } else {
-    sessionStorage.removeItem('accessToken');
+    sessionStorage.clear();
 
     delete axios.defaults.headers.common.Authorization;
   }

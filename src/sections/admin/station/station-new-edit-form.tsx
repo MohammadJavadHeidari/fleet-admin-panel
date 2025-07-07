@@ -49,7 +49,7 @@ const useGetReverseGeocoding = (coordinates: INeshanCoordinates) =>
 
 const useCreateStation = () =>
   useMutation({
-    mutationFn: (data: NewStationFormValues) => apiClient.post(API_ENDPOINTS.station.new, data),
+    mutationFn: (data: NewStationFormValues) => apiClient.post(API_ENDPOINTS.admin.station.new, data),
   });
 
 export default function StationNewEditForm({ currentStation }: Props) {

@@ -1,1 +1,2 @@
-export * from './sign-in-view';
+export * from './otp-request-view';
+export * from './otp-verify-view';

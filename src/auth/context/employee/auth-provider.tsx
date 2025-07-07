@@ -11,6 +11,7 @@ import type { AuthUserType, ActionMapType, AuthStateType } from '../../types';
 
 enum Types {
   INITIAL = 'INITIAL',
+  REQUEST_OTP = 'REQUEST_OTP',
   LOGIN = 'LOGIN',
   LOGOUT = 'LOGOUT',
 }
@@ -18,6 +19,9 @@ enum Types {
 type Payload = {
   [Types.INITIAL]: {
     user: AuthUserType;
+  };
+  [Types.REQUEST_OTP]: {
+    phoneNumber: string;
   };
   [Types.LOGIN]: {
     user: AuthUserType;
@@ -41,6 +45,15 @@ const reducer = (state: AuthStateType, action: ActionsType) => {
       user: action.payload.user,
     };
   }
+  if (action.type === Types.REQUEST_OTP) {
+    return {
+      ...state,
+      user: {
+        ...state.user,
+        phoneNumber: action.payload.phoneNumber,
+      },
+    };
+  }
   if (action.type === Types.LOGIN) {
     return {
       ...state,
@@ -58,7 +71,7 @@ const reducer = (state: AuthStateType, action: ActionsType) => {
 
 // ----------------------------------------------------------------------
 
-const STORAGE_KEY = 'accessToken';
+const STORAGE_KEY = 'employeeAccessToken';
 
 type Props = {
   children: React.ReactNode;
@@ -72,7 +85,7 @@ export function AuthProvider({ children }: Props) {
       const accessToken = sessionStorage.getItem(STORAGE_KEY);
 
       if (accessToken && isValidToken(accessToken)) {
-        setSession(accessToken);
+        setSession(STORAGE_KEY, accessToken);
 
         const response = await axios.get(API_ENDPOINTS.employee.auth.me);
 
@@ -109,32 +122,50 @@ export function AuthProvider({ children }: Props) {
     initialize();
   }, [initialize]);
 
-  // LOGIN
-  const login = useCallback(async (email: string, password: string) => {
-    const data = {
-      email,
-      password,
-    };
+  // REQUEST OTP
+  const requestOtp = useCallback(async (phoneNumber: string) => {
+    const data = { phoneNumber };
 
     const response = await axios.post(API_ENDPOINTS.employee.auth.requestOtp, data);
 
+    console.log({ requestOtp: response.data });
+
+    dispatch({
+      type: Types.REQUEST_OTP,
+      payload: {
+        phoneNumber,
+      },
+    });
+  }, []);
+
+  // VERIFY OTP
+
+  const verifyOtp = useCallback(async (phoneNumber: string, otp: string) => {
+    const data = { phoneNumber, otp };
+
+    const response = await axios.post(API_ENDPOINTS.employee.auth.verifyOtp, data);
+
     const {
+      success,
+      message,
       data: { accessToken, ...user },
     } = response.data;
 
-    setSession(accessToken);
+    if (!success) {
+      throw new Error(message);
+    }
+
+    setSession(STORAGE_KEY, accessToken);
 
     dispatch({
       type: Types.LOGIN,
-      payload: {
-        user,
-      },
+      payload: { user },
     });
   }, []);
 
   // LOGOUT
   const logout = useCallback(async () => {
-    setSession(null);
+    setSession(STORAGE_KEY, null);
     dispatch({
       type: Types.LOGOUT,
     });
@@ -154,10 +185,11 @@ export function AuthProvider({ children }: Props) {
       authenticated: status === 'authenticated',
       unauthenticated: status === 'unauthenticated',
       //
-      login,
+      requestOtp,
+      verifyOtp,
       logout,
     }),
-    [login, logout, state.user, status]
+    [requestOtp, verifyOtp, logout, state.user, status]
   );
 
   return <AuthContext.Provider value={memoizedValue}>{children}</AuthContext.Provider>;

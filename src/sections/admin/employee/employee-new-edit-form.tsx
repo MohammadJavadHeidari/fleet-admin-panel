@@ -39,13 +39,13 @@ type NewEmployeeFormValues = zod.infer<typeof NewEmployeeSchema>;
 
 const useCreateEmployee = () =>
   useMutation({
-    mutationFn: (data: NewEmployeeFormValues) => apiClient.post(API_ENDPOINTS.employee.new, data),
+    mutationFn: (data: NewEmployeeFormValues) => apiClient.post(API_ENDPOINTS.admin.employee.new, data),
   });
 
 const useGetStationList = () =>
   useQuery({
     queryKey: ['station', 'list'],
-    queryFn: () => apiClient.get<IStationList>(API_ENDPOINTS.station.list),
+    queryFn: () => apiClient.get<IStationList>(API_ENDPOINTS.admin.station.list),
   });
 
 export default function EmployeeNewEditForm({ currentEmployee }: Props) {

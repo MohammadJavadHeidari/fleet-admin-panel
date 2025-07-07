@@ -63,13 +63,13 @@ type Props = {
 
 const useCreateDriver = () =>
   useMutation({
-    mutationFn: (data: NewDriverFormValues) => apiClient.post(API_ENDPOINTS.driver.new, data),
+    mutationFn: (data: NewDriverFormValues) => apiClient.post(API_ENDPOINTS.admin.driver.new, data),
   });
 
 const useGetRouteList = () =>
   useQuery({
     queryKey: ['route', 'list'],
-    queryFn: () => apiClient.get<IRouteList>(API_ENDPOINTS.route.list),
+    queryFn: () => apiClient.get<IRouteList>(API_ENDPOINTS.admin.route.list),
   });
 
 export default function DriverNewEditForm({ currentDriver }: Props) {

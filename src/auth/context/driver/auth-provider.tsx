@@ -71,7 +71,7 @@ const reducer = (state: AuthStateType, action: ActionsType) => {
 
 // ----------------------------------------------------------------------
 
-const STORAGE_KEY = 'accessToken';
+const STORAGE_KEY = 'driverAccessToken';
 
 type Props = {
   children: React.ReactNode;
@@ -85,7 +85,7 @@ export function AuthProvider({ children }: Props) {
       const accessToken = sessionStorage.getItem(STORAGE_KEY);
 
       if (accessToken && isValidToken(accessToken)) {
-        setSession(accessToken);
+        setSession(STORAGE_KEY, accessToken);
 
         const response = await axios.get(API_ENDPOINTS.driver.auth.me);
 
@@ -155,7 +155,7 @@ export function AuthProvider({ children }: Props) {
       throw new Error(message);
     }
 
-    setSession(accessToken);
+    setSession(STORAGE_KEY, accessToken);
 
     dispatch({
       type: Types.LOGIN,
@@ -165,7 +165,7 @@ export function AuthProvider({ children }: Props) {
 
   // LOGOUT
   const logout = useCallback(async () => {
-    setSession(null);
+    setSession(STORAGE_KEY, null);
     dispatch({
       type: Types.LOGOUT,
     });

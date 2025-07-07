@@ -34,7 +34,7 @@ import { emptyRows, applyFilter, getComparator } from '../utils';
 const useGetStationList = () =>
   useQuery({
     queryKey: ['station', 'list'],
-    queryFn: () => apiClient.get<IStationList>(API_ENDPOINTS.station.list),
+    queryFn: () => apiClient.get<IStationList>(API_ENDPOINTS.admin.station.list),
   });
 
 const TABLE_HEAD = [

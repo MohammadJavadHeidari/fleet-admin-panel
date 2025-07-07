@@ -42,7 +42,7 @@ import { EmployeeTableToolbar } from '../employee-table-toolbar';
 const useGetEmployeeList = () =>
   useQuery({
     queryKey: ['employee', 'list'],
-    queryFn: () => apiClient.get<IEmployeeList>(API_ENDPOINTS.employee.list),
+    queryFn: () => apiClient.get<IEmployeeList>(API_ENDPOINTS.admin.employee.list),
   });
 
 const TABLE_HEAD = [

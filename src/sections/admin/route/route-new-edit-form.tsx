@@ -52,13 +52,13 @@ type FormValuesProps = zod.infer<typeof NewRouteSchema>;
 const useCreateRoute = () =>
   useMutation({
     mutationFn: (data: Omit<FormValuesProps, 'stations'> & { stations: string[] }) =>
-      apiClient.post(API_ENDPOINTS.route.new, data),
+      apiClient.post(API_ENDPOINTS.admin.route.new, data),
   });
 
 const useGetStationList = () =>
   useQuery({
     queryKey: ['station', 'list'],
-    queryFn: () => apiClient.get<IStationList>(API_ENDPOINTS.station.list),
+    queryFn: () => apiClient.get<IStationList>(API_ENDPOINTS.admin.station.list),
   });
 
 export default function RouteNewEditForm({ currentRoute }: Props) {

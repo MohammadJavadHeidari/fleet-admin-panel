@@ -36,7 +36,7 @@ import { emptyRows, applyFilter, getComparator } from '../utils';
 const useGetRouteList = () =>
   useQuery({
     queryKey: ['route', 'list'],
-    queryFn: () => apiClient.get<IRouteList>(API_ENDPOINTS.route.list),
+    queryFn: () => apiClient.get<IRouteList>(API_ENDPOINTS.admin.route.list),
   });
 
 const TABLE_HEAD = [

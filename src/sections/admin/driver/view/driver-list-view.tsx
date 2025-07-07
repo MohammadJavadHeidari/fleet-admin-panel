@@ -42,7 +42,7 @@ import { DriverTableToolbar } from '../driver-table-toolbar';
 const useGetDriverList = () =>
   useQuery({
     queryKey: ['driver', 'list'],
-    queryFn: () => apiClient.get<IDriverList>(API_ENDPOINTS.driver.list),
+    queryFn: () => apiClient.get<IDriverList>(API_ENDPOINTS.admin.driver.list),
   });
 
 const TABLE_HEAD = [

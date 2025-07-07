@@ -40,29 +40,36 @@ export const API_ENDPOINTS = {
       me: `${ADMIN_BASE_URL}/auth/me`,
       signIn: `${ADMIN_BASE_URL}/auth/sign-in`,
     },
-  },
-
-  auth: {
-    me: '/auth/me',
-    signIn: '/auth/sign-in',
-    register: '/auth/register',
+    employee: {
+      list: `${ADMIN_BASE_URL}/employee/list`,
+      new: `${ADMIN_BASE_URL}/employee/new`,
+    },
+    driver: {
+      list: `${ADMIN_BASE_URL}/driver/list`,
+      new: `${ADMIN_BASE_URL}/driver/new`,
+    },
+    station: {
+      list: `${ADMIN_BASE_URL}/station/list`,
+      new: `${ADMIN_BASE_URL}/station/new`,
+    },
+    route: {
+      list: `${ADMIN_BASE_URL}/route/list`,
+      new: `${ADMIN_BASE_URL}/route/new`,
+    },
   },
   // Employee
   employee: {
-    list: '/employee/list',
-    new: '/employee/new',
-
     auth: {
       me: `${EMPLOYEE_BASE_URL}/auth/me`,
       requestOtp: `${EMPLOYEE_BASE_URL}/auth/otp/request`,
       verifyOtp: `${EMPLOYEE_BASE_URL}/auth/otp/verify`,
     },
+    driver: {
+      location: `${EMPLOYEE_BASE_URL}/driver/location`,
+    },
   },
   // Driver
   driver: {
-    list: '/driver/list',
-    new: '/driver/new',
-
     auth: {
       me: `${DRIVER_BASE_URL}/auth/me`,
       requestOtp: `${DRIVER_BASE_URL}/auth/otp/request`,
@@ -74,13 +81,5 @@ export const API_ENDPOINTS = {
     route: {
       assigned: `${DRIVER_BASE_URL}/route/assigned`,
     },
-  },
-  station: {
-    list: '/station/list',
-    new: '/station/new',
-  },
-  route: {
-    list: '/route/list',
-    new: '/route/new',
   },
 };
