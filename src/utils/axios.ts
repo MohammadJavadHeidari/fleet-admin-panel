@@ -4,7 +4,8 @@ import axios from 'axios';
 
 // ----------------------------------------------------------------------
 
-const axiosInstance = axios.create({ baseURL: ' https://fleet-api.liara.run/api' });
+// const axiosInstance = axios.create({ baseURL: 'https://fleet-api.liara.run/api' });
+const axiosInstance = axios.create({ baseURL: 'http://127.0.0.1:3000/api' });
 
 axiosInstance.interceptors.response.use(
   (response) => response,

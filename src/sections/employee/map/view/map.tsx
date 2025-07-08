@@ -81,7 +81,6 @@ export function MapView() {
       .setLngLat([lng, lat])
       .setPopup(popupText)
       .addTo(mapRef.current!);
-
   }, [isDriverLocationLoading, driverLocation]);
 
   const handleLocationButton = async () => {
@@ -132,7 +131,13 @@ export function MapView() {
 
   return (
     <MobileContent>
-      <Map mapSetter={mapSetter} />
+      <Map
+        style={{
+          height: '100vh',
+          position: 'relative',
+        }}
+        mapSetter={mapSetter}
+      />
       {locationButton}
     </MobileContent>
   );

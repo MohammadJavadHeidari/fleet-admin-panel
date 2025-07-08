@@ -258,7 +258,7 @@ export default function RouteNewEditForm({ currentRoute }: Props) {
           variant="outlined"
           fullWidth
           color="primary"
-          onClick={() => insert(1, { id: '', stationId: '' })}
+          onClick={() => insert(fields.length - 1, { id: '', stationId: '' })}
         >
           افزودن ایستگاه
         </Button>

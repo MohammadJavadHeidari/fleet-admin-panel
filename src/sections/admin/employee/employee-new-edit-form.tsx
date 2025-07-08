@@ -31,7 +31,6 @@ const NewEmployeeSchema = zod.object({
   lastName: zod.string().min(1, 'نام خانوادگی اجباری است'),
   phoneNumber: zod.string().min(1, 'شماره تلفن اجباری است'),
   email: zod.string().min(1, 'ایمیل اجباری است'),
-  password: zod.string().min(1, 'رمز عبور اجباری است'),
   stationId: zod.string().min(1, 'ایستگاه اجباری است'),
 });
 
@@ -62,7 +61,6 @@ export default function EmployeeNewEditForm({ currentEmployee }: Props) {
       lastName: currentEmployee?.lastName || '',
       phoneNumber: currentEmployee?.phoneNumber || '',
       email: currentEmployee?.email || '',
-      password: currentEmployee?.password || '',
       stationId: currentEmployee?.station.id || '',
     }),
     [currentEmployee]
@@ -111,9 +109,11 @@ export default function EmployeeNewEditForm({ currentEmployee }: Props) {
           <RHFTextField name="lastName" label="نام خانوادگی" />
           <RHFTextField name="phoneNumber" label="شماره تلفن" />
           <RHFTextField name="email" label="ایمیل" />
-          <RHFTextField name="password" label="رمز عبور" />
 
           <RHFAutocomplete
+            sx={{
+              gridColumn: 'span 2',
+            }}
             name="stationId"
             label="ایستگاه"
             options={stations.map((station) => station.id)}

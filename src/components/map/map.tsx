@@ -15,10 +15,6 @@ export const Map = ({ ...other }: Omit<MapComponentProps, 'options'>) => (
       zoom: 13,
       center: [59.605936719447655, 36.29804508848799],
     }}
-    style={{
-        height: '100vh',
-        position: 'relative',
-    }}
     {...other}
   />
 );

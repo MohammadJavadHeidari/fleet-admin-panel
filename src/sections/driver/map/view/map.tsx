@@ -260,7 +260,13 @@ export function MapView() {
 
   return (
     <MobileContent>
-      <Map mapSetter={mapSetter} />
+      <Map
+        style={{
+          height: '100vh',
+          position: 'relative',
+        }}
+        mapSetter={mapSetter}
+      />
       {locationButton}
       {switchShiftButton}
     </MobileContent>
